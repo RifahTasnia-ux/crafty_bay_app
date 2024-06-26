@@ -1,17 +1,29 @@
+import 'package:crafty_bay/data/models/cart_item.dart';
+import 'package:crafty_bay/presentation/state_holders/cart_list_controller.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
 import 'package:crafty_bay/presentation/utility/assets_path.dart';
+import 'package:crafty_bay/presentation/widgets/snack_message.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
 class CartProductItem extends StatefulWidget {
-  const CartProductItem({super.key});
+  const CartProductItem({super.key, required this.cartItem});
+
+  final CartItemModel cartItem;
 
   @override
   State<CartProductItem> createState() => _CartProductItemState();
 }
 
 class _CartProductItemState extends State<CartProductItem> {
-  int _counterValue = 1;
+  late int _counterValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _counterValue = widget.cartItem.qty!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +58,15 @@ class _CartProductItemState extends State<CartProductItem> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                bool isDeleted = await Get.find<CartListController>()
+                    .deleteCartItem(widget.cartItem.product!.id!);
+                if (isDeleted && mounted) {
+                  setState(() {
+                    //showSnackMessage(context, "Deleted Successfully!");
+                  });
+                }
+              },
               icon: const Icon(Icons.delete_outline_sharp),
             )
           ],
@@ -54,9 +74,9 @@ class _CartProductItemState extends State<CartProductItem> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              '\$100',
-              style: TextStyle(
+            Text(
+              '\$${widget.cartItem.product?.price ?? 0}',
+              style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                   color: AppColors.primaryColor),
@@ -69,16 +89,16 @@ class _CartProductItemState extends State<CartProductItem> {
   }
 
   Widget _buildColorAndSize() {
-    return const Wrap(
+    return Wrap(
       spacing: 16,
       children: [
         Text(
-          'Color: Red',
-          style: TextStyle(color: Colors.black54),
+          'Color: ${widget.cartItem.color ?? ""}',
+          style: const TextStyle(color: Colors.black),
         ),
         Text(
-          'Size: XL',
-          style: TextStyle(color: Colors.black54),
+          'Size: ${widget.cartItem.size ?? ""}',
+          style: const TextStyle(color: Colors.black),
         ),
       ],
     );
@@ -92,18 +112,19 @@ class _CartProductItemState extends State<CartProductItem> {
       decimalPlaces: 0,
       color: AppColors.primaryColor,
       onChanged: (value) {
-        print(value);
         _counterValue = value as int;
+        Get.find<CartListController>()
+            .changeProductQuantity(widget.cartItem.id!, _counterValue);
         setState(() {});
       },
     );
   }
 
   Widget _buildProductName() {
-    return const Text(
-      'Nike shoe 213234KG34',
-      maxLines: 1,
-      style: TextStyle(
+    return Text(
+      widget.cartItem.product?.title ?? '',
+      maxLines: 2,
+      style: const TextStyle(
           fontSize: 16, color: Colors.black, overflow: TextOverflow.ellipsis),
     );
   }
@@ -111,9 +132,9 @@ class _CartProductItemState extends State<CartProductItem> {
   Widget _buildProductImage() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Image.asset(
-        AssetsPath.productDummyImgPng,
-        width: 100,
+      child: Image.network(
+        widget.cartItem.product?.image ?? '',
+        height: 100,
       ),
     );
   }

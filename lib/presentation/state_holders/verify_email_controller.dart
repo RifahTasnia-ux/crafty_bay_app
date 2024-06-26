@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class VerifyEmailController extends GetxController {
   bool _inProgress = false;
-  String _errorMessage = '';
+  String _errorMessage = 'Something went wrong.';
 
   bool get inProgress => _inProgress;
 

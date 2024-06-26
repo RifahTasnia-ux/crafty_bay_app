@@ -54,12 +54,13 @@ class NetworkCaller {
     try {
       log(url);
       log(UserAuthController.accessToken);
+      log(body.toString());
       final Response response = await post(Uri.parse(url),
           headers: {
             'accept': 'application/json',
             'token': UserAuthController.accessToken
           },
-          body: jsonEncode(body));
+          body: body);
       log(response.statusCode.toString());
       log(response.body.toString());
       if (response.statusCode == 200) {
@@ -87,13 +88,15 @@ class NetworkCaller {
     }
   }
 
-  static void _goToSignInScreen() {
+  static Future<void> _goToSignInScreen() async {
     // Navigator.push(
     //   CraftyBay.navigationKey.currentState!.context,
     //   MaterialPageRoute(
     //     builder: (context) => const EmailVerificationScreen(),
     //   ),
     // );
+
+    await UserAuthController.clearUserData();
     getx.Get.to(() => const EmailVerificationScreen());
   }
 }

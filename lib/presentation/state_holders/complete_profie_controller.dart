@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class CompleteProfileController extends GetxController {
   bool _inProgress = false;
-  String _errorMessage = 'Complete Profile failed! Try again.';
+  String _errorMessage = '';
 
   bool get inProgress => _inProgress;
   String get errorMessage => _errorMessage;

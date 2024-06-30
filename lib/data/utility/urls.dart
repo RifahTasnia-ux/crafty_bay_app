@@ -12,6 +12,10 @@ class Urls {
 
   static String productDetails(int productId) =>
       '$_baseUrl/ProductDetailsById/$productId';
+  static String ReviewList(int productId) =>
+      '$_baseUrl/ListReviewByProduct/$productId';
+
+  static const String createReview = '$_baseUrl/CreateProductReview';
 
   static const String addToCart = '$_baseUrl/CreateCartList';
 

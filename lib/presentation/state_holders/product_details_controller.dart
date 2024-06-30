@@ -5,8 +5,6 @@ import 'package:crafty_bay/data/network_caller/network_caller.dart';
 import 'package:crafty_bay/data/utility/urls.dart';
 import 'package:get/get.dart';
 
-import '../../data/models/product_details_wrapper_model.dart';
-
 class ProductDetailsController extends GetxController {
   bool _inProgress = false;
   String _errorMessage = '';

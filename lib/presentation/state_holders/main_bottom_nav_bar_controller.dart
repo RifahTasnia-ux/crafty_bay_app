@@ -2,6 +2,7 @@ import 'package:crafty_bay/presentation/screens/email_verification_screen.dart';
 import 'package:crafty_bay/presentation/state_holders/user_auth_controller.dart';
 import 'package:get/get.dart';
 
+
 class MainBottomNavBarController extends GetxController {
   int _selectedIndex = 0;
 

@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class CartListController extends GetxController {
   bool _inProgress = false;
-  String _errorMessage = 'Something went wrong. Try again.';
+  String _errorMessage = '';
   List<CartItemModel> _cartList = [];
 
   bool get inProgress => _inProgress;

@@ -41,29 +41,6 @@ class CreateProfile {
     required this.updatedAt,
   });
 
-  /*factory CreateProfile.fromJson(Map<String, dynamic> json) {
-    return CreateProfile(
-      id: json['id'],
-      cusName: json['cus_name'],
-      cusAdd: json['cus_add'],
-      cusCity: json['cus_city'],
-      cusState: json['cus_state'],
-      cusPostcode: json['cus_postcode'],
-      cusCountry: json['cus_country'],
-      cusPhone: json['cus_phone'],
-      cusFax: json['cus_fax'],
-      shipName: json['ship_name'],
-      shipAdd: json['ship_add'],
-      shipCity: json['ship_city'],
-      shipState: json['ship_state'],
-      shipPostcode: json['ship_postcode'],
-      shipCountry: json['ship_country'],
-      shipPhone: json['ship_phone'],
-      userId: json['user_id'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
-    );
-  }*/
 
   Map<String, dynamic> toJson() {
     return {
@@ -86,6 +63,7 @@ class CreateProfile {
       'user_id': userId,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
+
     };
   }
 }

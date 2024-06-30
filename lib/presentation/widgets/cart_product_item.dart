@@ -1,8 +1,6 @@
 import 'package:crafty_bay/data/models/cart_item.dart';
 import 'package:crafty_bay/presentation/state_holders/cart_list_controller.dart';
 import 'package:crafty_bay/presentation/utility/app_colors.dart';
-import 'package:crafty_bay/presentation/utility/assets_path.dart';
-import 'package:crafty_bay/presentation/widgets/snack_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
@@ -61,9 +59,10 @@ class _CartProductItemState extends State<CartProductItem> {
               onPressed: () async {
                 bool isDeleted = await Get.find<CartListController>()
                     .deleteCartItem(widget.cartItem.product!.id!);
-                if (isDeleted && mounted) {
+                bool deleted = await Get.find<CartListController>()
+                    .deleteCartItem(widget.cartItem.id!);
+                if (deleted && isDeleted && mounted) {
                   setState(() {
-                    //showSnackMessage(context, "Deleted Successfully!");
                   });
                 }
               },

@@ -20,6 +20,10 @@ class _CartListScreenState extends State<CartListScreen> {
     Get.find<CartListController>().getCartList();
   }
 
+  Future<void> _refreshCartList() async {
+    await Get.find<CartListController>().getCartList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -41,16 +45,27 @@ class _CartListScreenState extends State<CartListScreen> {
           if (cartListController.inProgress) {
             return const CenteredCircularProgressIndicator();
           }
+          if (cartListController.cartList.isEmpty) {
+            return Center(
+              child: Text(
+                'There are no items in the Cartlist',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+            );
+          }
 
           return Column(
             children: [
               Expanded(
-                child: ListView.builder(
-                  itemCount: cartListController.cartList.length,
-                  itemBuilder: (context, index) {
-                    return CartProductItem(
-                        cartItem: cartListController.cartList[index]);
-                  },
+                child: RefreshIndicator(
+                  onRefresh: _refreshCartList,
+                  child: ListView.builder(
+                    itemCount: cartListController.cartList.length,
+                    itemBuilder: (context, index) {
+                      return CartProductItem(
+                          cartItem: cartListController.cartList[index]);
+                    },
+                  ),
                 ),
               ),
               _buildCheckoutWidget(cartListController.totalPrice),

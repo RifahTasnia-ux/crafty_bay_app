@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 
 class WishListController extends GetxController {
   bool _inProgress = false;
-  String _errorMessage = 'Something went wrong. Try again.';
+  String _errorMessage = '';
   List<WishListItem> _wishList = [];
 
   bool get inProgress => _inProgress;

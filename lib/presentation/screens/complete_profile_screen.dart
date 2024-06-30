@@ -50,7 +50,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 const SizedBox(height: 24),
                 const AppLogo(),
                 const SizedBox(height: 16),
-                Text('Complete Profile', style: textTheme.headline6),
+                Text('Complete Profile', style: textTheme.titleLarge),
                 const SizedBox(height: 4),
                 Text('Get started with us by providing your details', style: textTheme.subtitle1),
                 const SizedBox(height: 24),
@@ -61,7 +61,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     if (controller.inProgress) {
                       return const CenteredCircularProgressIndicator();
                     }
-
                     return ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
@@ -90,6 +89,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           bool success = await _completeProfileController.completeProfile(createProfileModel);
 
                           if (success) {
+                            showSnackMessage("Profile Created Successfully!");
                             Get.off(() => const MainBottomNavBarScreen());
                           } else {
                             showSnackMessage(_completeProfileController.errorMessage, isError: true);
@@ -122,6 +122,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           const SizedBox(height: 8),
           TextFormField(
             controller: _addressTEController,
+            maxLines: 3,
             decoration: const InputDecoration(hintText: 'Full Address'),
             validator: (value) => value!.isEmpty ? 'Please enter your address' : null,
           ),
@@ -140,6 +141,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           const SizedBox(height: 8),
           TextFormField(
             controller: _postcodeTEController,
+            keyboardType: TextInputType.number,
             decoration: const InputDecoration(hintText: 'Post Code'),
             validator: (value) => value!.isEmpty ? 'Please enter your postcode' : null,
           ),
@@ -152,12 +154,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           const SizedBox(height: 8),
           TextFormField(
             controller: _mobileTEController,
+            keyboardType: TextInputType.number,
             decoration: const InputDecoration(hintText: 'Mobile'),
             validator: (value) => value!.isEmpty ? 'Please enter your mobile number' : null,
           ),
           const SizedBox(height: 8),
           TextFormField(
             controller: _faxTEController,
+            keyboardType: TextInputType.number,
             decoration: const InputDecoration(hintText: 'Fax Number'),
           ),
           const SizedBox(height: 8),
@@ -168,6 +172,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           const SizedBox(height: 8),
           TextFormField(
             controller: _shippingAddressTEController,
+            maxLines: 3,
             decoration: const InputDecoration(hintText: 'Shipping address'),
           ),
           const SizedBox(height: 8),
@@ -183,6 +188,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           const SizedBox(height: 8),
           TextFormField(
             controller: _shippingPostcodeTEController,
+            keyboardType: TextInputType.number,
             decoration: const InputDecoration(hintText: 'Shipping postcode'),
           ),
           const SizedBox(height: 8),
@@ -193,6 +199,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           const SizedBox(height: 8),
           TextFormField(
             controller: _shippingPhoneTEController,
+            keyboardType: TextInputType.number,
             decoration: const InputDecoration(hintText: 'Shipping phone number'),
           ),
         ],
